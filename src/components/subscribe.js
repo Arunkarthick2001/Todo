@@ -1,7 +1,17 @@
 // import { Button } from "bootstrap";
 import React, { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
-const Subscribe = () => {
+import { getDatabase, ref, set } from "firebase/database";
+import { app } from "../firebase";
+
+const db = getDatabase(app);
+
+const Subscribe = ({ items, handleCheck, handleDelete }) => {
+  const putData = () => {
+    setCount((count) => count + 1);
+    console.log(count);
+    set(ref(db, "users/subs"), count);
+  };
   const [Name, setName] = useState({ text: "Subscribe", count: 0 });
   const [count, setCount] = useState(0);
   function changeState() {
@@ -13,51 +23,63 @@ const Subscribe = () => {
     setCount(count + 1);
   }
 
-  const [items, setItems] = useState([
-    { id: 1, name: "Arun", Dept: "ECE", checked: false },
-    {
-      id: 2,
-      name: "Karthick",
-      Dept: "ECE",
-      checked: false,
-    },
-    { id: 3, name: "Elakkya", Dept: "ECE", checked: false },
-  ]);
-
-  const handleCheck = (id) => {
-    const listItems = items.map((item) =>
-      item.id === id ? { ...item, checked: !item.checked } : item
-    );
-    setItems(listItems);
-  };
   return (
     <>
-      <h1 className="bg-primary text-center">Hello to Youtube</h1>
+      <h1 className="bg-primary text-center"> Todo List</h1>
       <p className="bg-secondary d-inline-flex p-2 fs-3 fw-bolder text-decoration-underline">
         Welcome to Arunkarthick Youtube channel
       </p>
       <br></br>
       <button
         onClick={changeState}
-        className="p-1 fs-3 btn btn-primary border bottom-100"
+        className="p-1 fs-3 btn btn-primary border bottom-100 mb-4 ms-4"
       >
         {Name.text}
       </button>
-      <p className="fs-3 text-dark-emphasis text-bg-info">{count}</p>
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>
-            <input
-              type="checkbox"
-              checked={item.checked}
-              onChange={() => handleCheck(item.id)}
-            />
-            <label>{item.name}</label>
-            <MdDeleteOutline role="button" tabIndex="0" />
-          </li>
-        ))}
-      </ul>
+      {/* <p className="fs-3 text-dark-emphasis text-bg-info">{count}</p> */}
+      {items.length ? (
+        <ul className="list list-group">
+          {items.map((item) => (
+            <li key={item.id} className="list list-group-item">
+              <input
+                type="checkbox"
+                checked={item.checked}
+                onChange={() => handleCheck(item.id)}
+                className=" form-check-input"
+              />
+              <label
+                onDoubleClick={() => handleCheck(item.id)}
+                style={
+                  item.checked
+                    ? {
+                        textDecoration: "line-through",
+                        color: "grey",
+                        fontWeight: "lighter",
+                      }
+                    : { fontWeight: "bolder" }
+                }
+                className="fs-3 ps-4"
+              >
+                {item.name}
+              </label>
+              <MdDeleteOutline
+                size={30}
+                role="button"
+                tabIndex="0"
+                onClick={() => handleDelete(item.id)}
+                className="ms-4"
+              />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text text-center fs-4 fw-bolder">No list itmes found</p>
+      )}
     </>
   );
+};
+
+Subscribe.defaultProps = {
+  title: "Todo List",
 };
 export default Subscribe;
