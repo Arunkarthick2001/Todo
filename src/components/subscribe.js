@@ -2,27 +2,26 @@
 import React, { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { getDatabase, ref, set } from "firebase/database";
-import { app } from "../firebase";
+// import { app } from "../firebase";
+import { firebaseApp, useFirebase } from "../Context/Firebase";
+import { getAuth, signOut } from "firebase/auth";
 
-const db = getDatabase(app);
+// const db = getDatabase(app);
 
-const Subscribe = ({ items, handleCheck, handleDelete }) => {
-  const putData = () => {
-    setCount((count) => count + 1);
-    console.log(count);
-    set(ref(db, "users/subs"), count);
-  };
-  const [Name, setName] = useState({ text: "Subscribe", count: 0 });
-  const [count, setCount] = useState(0);
-  function changeState() {
-    if (Name.text === "Subscribe") {
-      setName({ text: "Unsubscribe" });
-    } else {
-      setName({ text: "Subscribe" });
-    }
-    setCount(count + 1);
-  }
-
+const Subscribe = ({
+  items,
+  handleCheck,
+  handleDelete,
+  Name,
+  setName,
+  changeState,
+}) => {
+  // const putData = () => {
+  //   setCount((count) => count + 1);
+  //   console.log(count);
+  //   set(ref(db, "users/subs"), count);
+  // };
+  const auth = getAuth(firebaseApp);
   return (
     <>
       <h1 className="bg-primary text-center"> Todo List</h1>
@@ -75,6 +74,7 @@ const Subscribe = ({ items, handleCheck, handleDelete }) => {
       ) : (
         <p className="text text-center fs-4 fw-bolder">No list itmes found</p>
       )}
+      <button onClick={() => signOut(auth)}>Logout</button>
     </>
   );
 };
