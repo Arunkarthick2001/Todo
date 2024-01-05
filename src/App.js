@@ -5,7 +5,7 @@ import { Footer } from "./components/footer";
 import AddItems from "./components/AddItems";
 function App() {
   const [items, setItems] = useState([
-    { id: 1, name: "sample1", Dept: "ECE", checked: false },
+    
     
   ]);
 
