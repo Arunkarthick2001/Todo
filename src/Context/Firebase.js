@@ -57,7 +57,7 @@ export const FirebaseProvider = (props) => {
     set(ref(db, key), data);
   };
   return (
-    <FirebaseContext.Provider value={{ signUpUser, putData, signInUser }}>
+    <FirebaseContext.Provider value={{ signUpUser, putData, signInUser, db }}>
       {props.children}
     </FirebaseContext.Provider>
   );
