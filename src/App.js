@@ -5,14 +5,8 @@ import { Footer } from "./components/footer";
 import AddItems from "./components/AddItems";
 function App() {
   const [items, setItems] = useState([
-    { id: 1, name: "Arun", Dept: "ECE", checked: false },
-    {
-      id: 2,
-      name: "Karthick",
-      Dept: "ECE",
-      checked: false,
-    },
-    { id: 3, name: "Elakkya", Dept: "ECE", checked: false },
+    { id: 1, name: "sample", Dept: "ECE", checked: false },
+    
   ]);
 
   const handleCheck = (id) => {
