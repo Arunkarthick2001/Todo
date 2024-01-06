@@ -115,7 +115,7 @@ function App() {
   async function fetchData() {
   //  var path = JSON.parse(localStorage.getItem("uid"));
     console.log(uid)
-    const dataRef = ref(database, "zDlQJ7PshngNFEiPa1HeMMLcXO43");
+    const dataRef = ref(database, uid);
     get(dataRef)
       .then((snapshot) => {
         if (snapshot.exists()) {
