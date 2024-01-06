@@ -6,8 +6,10 @@ const AddItems = ({ newItems, setNewItem, handleSubmit }) => {
   return (
     <>
       <form className="form form-control" onSubmit={handleSubmit}>
-        <label className="pe-2 fs-3">Enter task</label>
         <div className="row">
+          <div className="col col-sm-2">
+            <label className="pe-2 fs-3 f">Enter task here</label>
+          </div>
           <div className="col-md-4 mt-2">
             <input
               className="input input-group form-control-sm "
@@ -15,7 +17,7 @@ const AddItems = ({ newItems, setNewItem, handleSubmit }) => {
               ref={inputRef}
               id="task"
               type="text"
-              placeholder="Enter ur toto task"
+              placeholder="Enter ur todo task"
               required
               value={newItems}
               onChange={(e) => setNewItem(e.target.value)}
@@ -24,10 +26,10 @@ const AddItems = ({ newItems, setNewItem, handleSubmit }) => {
           <div className="col-md-4 ">
             <button
               type="submit "
-              className="btn btn-primary mt-2 w-100 align-content-center"
+              className="btn btn-primary mt-2 fw-bolder w-100 align-content-center"
               onClick={() => inputRef.current.focus()}
             >
-              <FaPlus className="border border-primary-subtle" size={20} />
+              Add <FaPlus className="border border-primary-subtle" size={20} />
             </button>
           </div>
         </div>

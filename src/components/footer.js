@@ -1,12 +1,10 @@
 import React from "react";
-
+import "../App.css";
 export const Footer = ({ length }) => {
   return (
-    <div className="text-center h-25 align-text-bottom">
-      <p className="fs-3 bg-danger-subtle border-5 border-end-3">
-        Reamaining tasks {length}
-      </p>
-      <p className="fs-0">Copyright 2023</p>
+    <div className="text-center">
+      <p className="fs-3 bg-danger-subtle">Reamaining tasks {length}</p>
+      <p className="fs-0 copyright">Copyright 2023</p>
     </div>
   );
 };
