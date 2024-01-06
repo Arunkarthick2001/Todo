@@ -26,7 +26,7 @@ const Subscribe = ({
     <>
       <h1 className="bg-primary text-center"> Todo List</h1>
       <p className="bg-secondary d-inline-flex p-2 fs-3 fw-bolder text-decoration-underline">
-        Welcome to Arunkarthick Youtube channel
+        Welcome to TODO List created By ArunKarthick
       </p>
       <br></br>
       <button
