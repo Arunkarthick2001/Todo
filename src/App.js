@@ -116,6 +116,7 @@ function App() {
   //  var path = JSON.parse(localStorage.getItem("uid"));
     console.log(uid)
     const dataRef = ref(database, uid);
+    try{
     get(dataRef)
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -125,8 +126,8 @@ function App() {
         } else {
           console.log("No data available");
         }
-      })
-      .catch((error) => {
+      })}
+      catch((error) => {
         console.error("Error getting data:", error);
       });
   }
