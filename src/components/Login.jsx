@@ -10,7 +10,7 @@ const Login = ({
   return (
     <>
       <div className="row">
-        <div className=" col-md-7 offset-md-4  ">
+        <div className=" col-sm-7 offset-sm-4  ">
           <h1 className=" bg-body-tertiary text-black">Login Page</h1>
 
           <input
@@ -26,7 +26,7 @@ const Login = ({
             onChange={(e) => setUserPassword(e.target.value)}
           />
           <button
-            className="mt-4 col-md-4 offset-md-1 btn btn-outline-info fw-bold fs-4"
+            className="mt-4 col-sm-4 offset-sm-1 btn btn-outline-info fw-bold fs-4"
             onClick={() => {
               onLogin2();
             }}
