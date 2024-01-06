@@ -8,6 +8,7 @@ import MainContent from "./components/MainContent";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ref, get, set, remove, getDatabase } from "firebase/database";
+import SignUp from "./components/SignUp";
 
 function App() {
   // useEffect(() => {
@@ -46,6 +47,7 @@ function App() {
   const database = getDatabase(firebaseApp);
   // const dataR/ef = ref(database, "yourData");
   const handleDelete = (id) => {
+    const dataRef = ref(database, uid);
     const updatedItems = items.filter((item) => item.id !== id);
     setItems(updatedItems);
     remove(ref(database, uid))
@@ -111,11 +113,11 @@ function App() {
   const auth = getAuth(firebaseApp);
   // const db = getDatabase(firebaseApp);
 
-  const dataRef = ref(database, "zDlQJ7PshngNFEiPa1HeMMLcXO43");
-  async function fetchData() {
-    var path = JSON.parse(localStorage.getItem("uid"));
-    const dataRef = ref(database, "zDlQJ7PshngNFEiPa1HeMMLcXO43");
-    get(dataRef)
+  async function fetchData(data) {
+    console.log(data);
+    // const dataRef = ref(database, uid);
+    const dataRe = ref(database, data);
+    get(dataRe)
       .then((snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.val();
@@ -129,11 +131,12 @@ function App() {
         console.error("Error getting data:", error);
       });
   }
-  useEffect(() => {
+  async function authStat() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setShowSubs(true);
         setUid(user.uid);
+        fetchData(user.uid);
         console.log(uid + "ehdgf");
         localStorage.setItem("uid", JSON.stringify(user.uid));
         // ...
@@ -141,7 +144,9 @@ function App() {
         setShowSubs(false);
       }
     });
-    fetchData();
+  }
+  useEffect(() => {
+    authStat();
   }, []);
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -157,6 +162,19 @@ function App() {
         // Handle login error (user is null, and error contains the error message)
         console.error("Login failed", error);
         // Display an error message or take appropriate actions
+      }
+    });
+  };
+  const [signUpName, setSignUpName] = useState("");
+  const [signUpPassword, setSignUpPassword] = useState("");
+  const onSignUp = () => {
+    firebase.signUpUser(signUpName, signUpPassword, (user, error) => {
+      console.log("onSignup");
+      if (user) {
+        console.log("Login successful", user.uid);
+        setUid(user.uid);
+      } else {
+        console.error("Login failed", error);
       }
     });
   };
@@ -178,6 +196,7 @@ function App() {
     const addNewItems = { id, name: item, checked: false };
     const listItems = [...items, addNewItems];
     // setItems(listItems);
+    const dataRef = ref(database, uid);
     set(dataRef, listItems)
       .then(() => {
         console.log("Data has been successfully written!");
@@ -205,16 +224,25 @@ function App() {
           setNewItem={setNewItem}
         ></MainContent>
       ) : (
-        <Login
-          onLogin={onLogin}
-          uid={uid}
-          setUid={setUid}
-          userName={userName}
-          userPassword={userPassword}
-          setUserName={setUserName}
-          setUserPassword={setUserPassword}
-          onLogin2={onLogin2}
-        ></Login>
+        <>
+          <Login
+            onLogin={onLogin}
+            uid={uid}
+            setUid={setUid}
+            userName={userName}
+            userPassword={userPassword}
+            setUserName={setUserName}
+            setUserPassword={setUserPassword}
+            onLogin2={onLogin2}
+          ></Login>
+          <SignUp
+            onSignUp={onSignUp}
+            signUpName={signUpName}
+            signUpPassword={signUpPassword}
+            setSignUpName={setSignUpName}
+            setSignUpPassword={setSignUpPassword}
+          ></SignUp>
+        </>
       )}
     </>
   );

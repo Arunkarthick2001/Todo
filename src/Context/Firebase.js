@@ -25,15 +25,15 @@ const FirebaseContext = createContext(null);
 export const useFirebase = () => useContext(FirebaseContext);
 
 export const FirebaseProvider = (props) => {
-  const signUpUser = (email, password) => {
-    return createUserWithEmailAndPassword(firebaseAuth, email, password).then(
-      (userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        console.log(user, "USER");
-        // ...
-      }
+  const signUpUser = async (email, password) => {
+    const userCredential = await createUserWithEmailAndPassword(
+      firebaseAuth,
+      email,
+      password
     );
+    // Signed up
+    const user = userCredential.user;
+    console.log(user, "USER");
   };
   const signInUser = (email, password, onLogin) => {
     return signInWithEmailAndPassword(firebaseAuth, email, password)
