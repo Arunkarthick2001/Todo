@@ -39,3 +39,14 @@
 input {
   align-items: first baseline;
 }
+.mainContent {
+  height: 425px; /* Set the desired height of the child container */
+  overflow-y: auto;
+}
+.footer {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

@@ -1,12 +1,26 @@
 // import { Button } from "bootstrap";
+import { getAuth, signOut } from "firebase/auth";
 import React from "react";
 import { MdDeleteOutline } from "react-icons/md";
-
+import { firebaseApp } from "../Context/Firebase";
 const Subscribe = ({ items, handleCheck, handleDelete }) => {
+  const auth = getAuth(firebaseApp);
   return (
     <>
-      <h1 className="bg-primary text-center"> Todo List</h1>
-      <p className="bg-secondary d-inline-flex p-2 fs-3 fw-bolder text-decoration-underline">
+      <div className="row bg-primary">
+        <div className="col col-sm-6">
+          <h1 className="bg-primary p-1"> Todo List</h1>
+        </div>
+        <div className="col col-sm-1 offset-5">
+          <button
+            className="btn btn-secondary mt-2"
+            onClick={() => signOut(auth)}
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+      <p className="bg-secondary d-inline-flex p-2 fs-3 mt-1 fw-bolder text-decoration-underline">
         Welcome to TODO List created By ArunKarthick
       </p>
       <br></br>
