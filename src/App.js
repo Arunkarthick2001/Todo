@@ -66,36 +66,6 @@ function App() {
       });
     // setItems([]);
   };
-
-  // const handleDelete = async (nameToDelete) => {
-  //   try {
-  //     // Get a snapshot of the data
-  //     const snapshot = await get(dataRef);
-
-  //     // Iterate through the snapshot
-  //     snapshot.forEach((childSnapshot) => {
-  //       const key = childSnapshot.key;
-  //       const item = childSnapshot.val();
-
-  //       // Check the condition
-  //       if (item.id === nameToDelete) {
-  //         // Delete the item
-  //         const itemRef = ref(dataRef, key);
-  //         remove(itemRef)
-  //           .then(() => {
-  //             console.log(
-  //               "Item has been successfully deleted from the database!"
-  //             );
-  //           })
-  //           .catch((error) => {
-  //             console.error("Error deleting item:", error);
-  //           });
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.error("Error getting data:", error);
-  //   }
-  // };
   // For adding new list items
 
   const [newItems, setNewItem] = useState("");
@@ -113,10 +83,10 @@ function App() {
   const auth = getAuth(firebaseApp);
   // const db = getDatabase(firebaseApp);
 
-  async function fetchData(data) {
-    console.log(data);
+  async function fetchData(dat) {
+    console.log(dat);
     // const dataRef = ref(database, uid);
-    const dataRe = ref(database, data);
+    const dataRe = ref(database, dat);
     get(dataRe)
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -125,6 +95,7 @@ function App() {
           setItems(data);
         } else {
           console.log("No data available");
+          setItems([]);
         }
       })
       .catch((error) => {
@@ -180,11 +151,6 @@ function App() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const dataRef = ref(db, uid);
-
-    // Write the data to the specified location
-
-    e.preventDefault();
 
     if (!newItems.trim()) return;
     addItem(newItems);
@@ -195,16 +161,19 @@ function App() {
     console.log(id);
     const addNewItems = { id, name: item, checked: false };
     const listItems = [...items, addNewItems];
-    // setItems(listItems);
-    const dataRef = ref(database, uid);
+    console.log(uid);
+    var path = uid;
+    console.log(path);
+    const dataRef = ref(database, `${path}`);
+    setItems(listItems);
     set(dataRef, listItems)
       .then(() => {
+        fetchData(path);
         console.log("Data has been successfully written!");
       })
       .catch((error) => {
         console.error("Error writing data:", error);
       });
-    fetchData();
   };
   return (
     <>
