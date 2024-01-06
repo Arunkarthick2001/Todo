@@ -151,7 +151,7 @@ function App() {
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const onLogin2 = () => {
-    firebase.signInUser(userName, userPassword, (user, error) => {
+    firebase.signUpUser(userName, userPassword, (user, error) => {
       console.log("onLogin2");
       if (user) {
         // Handle successful login (user is not null)
