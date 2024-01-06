@@ -132,7 +132,7 @@ function App() {
       });
   }
   async function authStat() {
-    onAuthStateChanged(auth, (user) => {
+    await onAuthStateChanged(auth, (user) => {
       if (user) {
         setShowSubs(true);
         setUid(user.uid);
@@ -151,7 +151,7 @@ function App() {
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const onLogin2 = () => {
-    firebase.signUpUser(userName, userPassword, (user, error) => {
+    firebase.signInUser(userName, userPassword, (user, error) => {
       console.log("onLogin2");
       if (user) {
         // Handle successful login (user is not null)
