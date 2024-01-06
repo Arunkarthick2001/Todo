@@ -46,18 +46,23 @@ function App() {
   const database = getDatabase(firebaseApp);
   // const dataR/ef = ref(database, "yourData");
   const handleDelete = (id) => {
-    const itemRef = ref(dataRef, uid);
-    remove(itemRef)
-      .then(() => {
-        console.log("Item has been successfully deleted from the database!");
-      })
-      .catch((error) => {
-        console.error("Error deleting item:", error);
-      });
-
-    // Update the local state (if needed)
     const updatedItems = items.filter((item) => item.id !== id);
     setItems(updatedItems);
+    remove(ref(database, uid))
+      .then(() => {
+        console.log("rmv suc");
+      })
+      .catch((error) => {
+        console.log("errr");
+      });
+    set(dataRef, updatedItems)
+      .then(() => {
+        console.log("Data has been successfully written!");
+      })
+      .catch((error) => {
+        console.error("Error writing data:", error);
+      });
+    // setItems([]);
   };
 
   // const handleDelete = async (nameToDelete) => {
@@ -102,10 +107,14 @@ function App() {
     setShowSubs(true);
     // console.log(userName, userPassword);
   };
+  const [uid, setUid] = useState("");
   const auth = getAuth(firebaseApp);
   // const db = getDatabase(firebaseApp);
+
   const dataRef = ref(database, "zDlQJ7PshngNFEiPa1HeMMLcXO43");
   async function fetchData() {
+    var path = JSON.parse(localStorage.getItem("uid"));
+    const dataRef = ref(database, "zDlQJ7PshngNFEiPa1HeMMLcXO43");
     get(dataRef)
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -125,13 +134,13 @@ function App() {
       if (user) {
         setShowSubs(true);
         setUid(user.uid);
-        // console.log(uid);
+        console.log(uid + "ehdgf");
+        localStorage.setItem("uid", JSON.stringify(user.uid));
         // ...
       } else {
         setShowSubs(false);
       }
     });
-
     fetchData();
   }, []);
   const [userName, setUserName] = useState("");
@@ -151,7 +160,6 @@ function App() {
       }
     });
   };
-  const [uid, setUid] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
     // const dataRef = ref(db, uid);
