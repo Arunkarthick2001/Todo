@@ -113,7 +113,8 @@ function App() {
 
   const dataRef = ref(database, "zDlQJ7PshngNFEiPa1HeMMLcXO43");
   async function fetchData() {
-    var path = JSON.parse(localStorage.getItem("uid"));
+  //  var path = JSON.parse(localStorage.getItem("uid"));
+    console.log(uid)
     const dataRef = ref(database, "zDlQJ7PshngNFEiPa1HeMMLcXO43");
     get(dataRef)
       .then((snapshot) => {
@@ -133,6 +134,7 @@ function App() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setShowSubs(true);
+        fetchData();
         setUid(user.uid);
         console.log(uid + "ehdgf");
         localStorage.setItem("uid", JSON.stringify(user.uid));
@@ -141,7 +143,7 @@ function App() {
         setShowSubs(false);
       }
     });
-    fetchData();
+   
   }, []);
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
