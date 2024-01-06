@@ -47,10 +47,7 @@ export const FirebaseProvider = (props) => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // console.log(errorMessage);
-
-        // Call the callback function with an error indication
-        onLogin(errorMessage);
+        onLogin(errorMessage, errorCode);
       });
   };
   const putData = (key, data) => {

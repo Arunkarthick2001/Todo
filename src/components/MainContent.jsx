@@ -25,12 +25,16 @@ const MainContent = ({
         setName={setName}
         // useFirebase={useFirebase}
       ></Subscribe>
-      <AddItems
-        newItems={newItems}
-        setNewItem={setNewItem}
-        handleSubmit={handleSubmit}
-      ></AddItems>
-      <Footer length={items.length}></Footer>
+      <div className="mt-5">
+        <AddItems
+          newItems={newItems}
+          setNewItem={setNewItem}
+          handleSubmit={handleSubmit}
+        ></AddItems>
+      </div>
+      <Footer
+        length={items.filter((item) => item.checked !== true).length}
+      ></Footer>
     </>
   );
 };

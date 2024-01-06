@@ -1,27 +1,8 @@
 // import { Button } from "bootstrap";
-import React, { useState } from "react";
+import React from "react";
 import { MdDeleteOutline } from "react-icons/md";
-import { getDatabase, ref, set } from "firebase/database";
-// import { app } from "../firebase";
-import { firebaseApp, useFirebase } from "../Context/Firebase";
-import { getAuth, signOut } from "firebase/auth";
 
-// const db = getDatabase(app);
-
-const Subscribe = ({
-  items,
-  handleCheck,
-  handleDelete,
-  Name,
-  setName,
-  changeState,
-}) => {
-  // const putData = () => {
-  //   setCount((count) => count + 1);
-  //   console.log(count);
-  //   set(ref(db, "users/subs"), count);
-  // };
-  const auth = getAuth(firebaseApp);
+const Subscribe = ({ items, handleCheck, handleDelete }) => {
   return (
     <>
       <h1 className="bg-primary text-center"> Todo List</h1>
@@ -29,22 +10,17 @@ const Subscribe = ({
         Welcome to TODO List created By ArunKarthick
       </p>
       <br></br>
-      <button
-        onClick={changeState}
-        className="p-1 fs-3 btn btn-primary border bottom-100 mb-4 ms-4"
-      >
-        {Name.text}
-      </button>
-      {/* <p className="fs-3 text-dark-emphasis text-bg-info">{count}</p> */}
+
       {items.length ? (
         <ul className="list list-group">
           {items.map((item) => (
             <li key={item.id} className="list list-group-item">
               <input
+                size={60}
                 type="checkbox"
                 checked={item.checked}
                 onChange={() => handleCheck(item.id)}
-                className=" form-check-input"
+                className="form form-check-label"
               />
               <label
                 onDoubleClick={() => handleCheck(item.id)}
@@ -74,7 +50,6 @@ const Subscribe = ({
       ) : (
         <p className="text text-center fs-4 fw-bolder">No list itmes found</p>
       )}
-      <button onClick={() => signOut(auth)}>Logout</button>
     </>
   );
 };
